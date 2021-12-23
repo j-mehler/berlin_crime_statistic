@@ -1,0 +1,161 @@
+---
+title: "The largest Criminal Experiment in History?"
+
+date: "`r format(Sys.time(), '%B %d, %Y | %H:%M | %Z')`"
+
+abstract: |
+  This article examines the development of crime rates in Berlin. More specifically, it distinguishes between the first year before the outbreak of the COVID-19 pandemic and the first year after the outbreak. Hence, potential changes in criminal activity are made visible. Furthermore, this article does not only consider the total number of crimes but rather differentiates between sub-categories. Subsequently, different developments across crime types can be examined. For this purpose, the Police Crime Statistic [(Kriminalitätsatlas Berlin)](https://www.kriminalitaetsatlas.berlin.de/K-Atlas/bezirke/atlasbez.html) is considered. As a main result, this investigation finds that the overall crime numbers slightly decreased in the examined time period. However, a closer look at the different crime types and city districts illustrates that this downward trend is driven by fundamentally contrasting developments within the respective categories. Exemplarily, some categories as car theft experienced drastically declining numbers, while drug-related offences increased in large parts of Berlin.
+
+output:
+  html_document:
+    code_folding: show
+    df_print: paged
+    highlight: tango
+    number_sections: no
+    #theme: cosmo
+    theme: cerulean
+    toc: no
+---
+***
+### Authors
+Carlo Greß (c.gress@mds.hertie-school.org) 
+- Data research and tidying, preparation of figure 1, drafting the report
+
+Hannah Schweren (h.schweren@mds.hertie-school.org)
+- Data research and tidying, preparation of figure 3, report writing and editing
+
+Johanna Mehler (j.mehler@mds.hertie-school.org)
+- Data research and tidying, Preparation of table 1 and figure 2, report writing and editing
+
+<style>
+div.answer {background-color:#f3f0ff; border-radius: 5px; padding: 20px;}
+</style>
+
+<style>
+body {
+text-align: justify}
+</style>
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      eval = TRUE,
+                      error = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = NA)
+```
+
+```{r include=FALSE}
+# import scripts for data wrangling, analysis and mapping
+source("1_tidy_data.R", local = knitr::knit_global())
+source("2_analysis.R", local = knitr::knit_global())
+source("4_geo_mapping.R", local = knitr::knit_global())
+source("3_small_multiples.R", local = knitr::knit_global())
+```
+
+***
+
+# Fact check
+
+The ongoing COVID-19 pandemic has affected numerous aspects of social cohabitation. Beyond the rather obvious effects on public health, previous research has identified another area that seems to be related to the development of the pandemic: criminal offences. Some researchers even referred to "the largest criminological experiment in history" when comparing pre- and post-covid crime rates (Stickle/Felson, 2020). One of the most striking observations from previous examinations was that crime rates  appear to have fallen during the pandemic, which researchers referred back to extensive stay-at-home policies in numerous countries (Stickle/Felson, 2020). 
+However, many previous analyses only focussed on the development of crime rates as a whole, not differentiating between distinct crime types (Boman/Gallupe, 2020). On the other hand, some studies specifically looked at certain crime types such as cyber-crimes and domestic violence (Bullinger et al., 2021; Kashif et al., 2020). As a result, both the broader studies as well as the more in-depth examinations were not able to detect potentially deviating development patterns across crime types. 
+
+### Berlin’s police crime statistics
+
+This article builds upon the previous results on the association between crime rates and the COVID-19 pandemic, using data of 2019 and 2020 on different crime types and their frequency in Berlin. The used data is available in the Police Crime Statistics, which has been published on a regular basis since 2008. Each publication covers information on crime and frequency numbers for one calendar year. This constellation offers the interesting opportunity to compare the last year before the outbreak of the pandemic (2019) to the first year after the outbreak (2020). Furthermore, the dataset allows  differentiating between Berlin’s city districts as well as the more narrow “LOR-Räume” and different crime types. This allows examining both geographical patterns within the city of Berlin as well as potentially varying developments across crime types. 
+
+
+# A look at the data 
+
+As a first overview of the crime statistics in Berlin 2019 and 2020, table 1 shows the absolute numbers of crimes with differentiation of the distinct crime types. 
+
+The slight decrease in total criminal offenses by approximately 19,000 cases could imply that crimes haven’t changed much. However, the differentiation by various criminal offenses in table 1 proofs this assumption wrong. Given the wide range of percentage change in both directions, it becomes clear that a slight overall change does not necessarily come with a slight change in every category.
+The trend is displayed in the third column which shows the percentage change. It varies throughout the types and shows significant differences within the types of crimes. Remarkably, some criminal offences show a contrasting trend. The most extreme cases are the increase of drug-related offences and the decline of car theft. 
+For this strong reduction of the latter, Berlin’s police report of 2020 attributes a decrease in all those crimes that experience shows are committed by "traveling offenders."
+
+
+```{r echo=FALSE}
+# print table
+table_1
+```
+
+*Table 1: Summary of percentage and absolute change for different criminal offenses in 2019 and 2020*
+
+Figure 1 shows the percentage change in crime frequencies for each district in Berlin, again differentiating between crime types. After taking a glance at the development of the numbers for the whole city of Berlin, the different developments across districts are now easily detectable. Even at first glance, profound differences between city districts as well as between crime types are visible. As can be derived from the corresponding legend, blue areas indicate less criminal activity in the respective districts when 2019 and 2020 figures are compared, while red areas indicate an increase. As it is already observable in Table 1, there are several crime categories in which criminal activity has been significantly reduced. Combining these insights with the maps in Figure 1, it becomes obvious that some of these trends are present in nearly all of Berlin’s city districts: The occurrence of car theft decreased in each district except for Neukölln, which experienced a minor increase (+2.7%). Especially the Eastern districts (Treptow-Köpenick, Marzahn-Hellersdorf, Lichtenberg, Friedrichshain-Kreuzberg) as well as few of the Western ones (Spandau, Steglitz-Zehlendorf) have seen drastic decreases of vehicle theft. All of them exceed a decline of 20 percent. On the other hand, there are also certain crime types with sharply increasing occurrence: Most prominently, in every district except for Mitte and Reinickendorf, drug-related offences have been registered more often. Additionally, these incidences increased most profoundly in five districts: Steglitz-Zehlendorf (20.1%), Charlottenburg-Wilmersdorf (26.2%), Pankow (38.7%), Neukölln (29.6%), and Treptow-Köpenick (25.9%). Ultimately, domestic burglary also decreased in most districts.
+Only in the category of property damage, the trend moved in the same direction in all districts. Comparing 2019 and 2020 numbers, this crime type increased everywhere, with Pankow (12.3%) and Lichtenberg (16.6%) seeing the highest increase. In the remaining categories, patterns are less similar across city districts. Interestingly, there are also some types with profound observable changes in both directions (for instance, arson). However, this could partially be because absolute numbers are comparatively low in those categories. In such cases, small changes have a strong impact on the relative values.
+
+```{r echo=FALSE, fig.align = 'center'}
+# print plot 1 (figure 1)
+plot_1
+```
+
+*Figure 1: Percentage change of criminal offenses between 2019 and 2020 for each district of Berlin.*
+
+Figure 2 allows to compare absolute and frequency numbers for all criminal offenses in Berlin’s districts ordered from highest to lowest amount respectively frequency.
+The highest absolute number of criminal offenses in both years occur in Mitte, followed by Friedrichshain-Kreuzberg. Contrastingly, the frequency number (representing cases per 100.000 habitants) is the highest in Charlottenburg-Wilmersdorf. Steglitz-Zehlendorf and Marzahn-Hellersdorf have the lowest number of crimes, whether you look at the absolute numbers or the frequency.
+
+```{r echo=FALSE, fig.align = 'center'}
+# print plot 2 (figure 2)
+plot_2
+```
+
+*Figure 2: change in crime from 2019 to 2020 by Berlin neighborhoods with absolute and with frequency figures* 
+
+
+# Comparing Berlin's neighborhoods
+
+If you are curious to see how the recorded crimes directly in your neighborhood have changed in the last year, feel invited to explore the interactive map in figure 3 (unless you are one of the 68 residents of the Forst Grunewald area. This district was unfortunately excluded from the calculation due to the low number of residents). By hovering over the map and clicking on the area of your interest, you can see the respective absolute and the relative number of crimes.
+
+```{r echo=FALSE}
+# print plot 3 (figure 3)
+tmap_mode("view")
+plot_3
+
+```
+
+*Figure 3: Change in the frequency of criminal offenses for each LOR area*
+
+# What to take out of this article?
+
+Although analyzing the changes between 2019 and 2020 revealed interesting tendencies, only a long time period will allow for more in-depth insights about Covid-19 effects on crime statistics.
+
+A problematic factor in crime statistics, however, is that assaults in the private sphere are particularly difficult to record during a pandemic. In times of social distance, the mechanisms for recognizing and intervening in these crimes are more difficult. This indicates that the available figures do not fully reflect reality. A possible example could be the number of crimes regarding bodily harm remaining relatively unaffected compared with pre-pandemic times. As the police’s report states, this observation for 2020 could be misleading knowing that many crimes could have happened unrecognized due to the changed circumstances.
+Consequently, it must be noted that police data can never represent the complete reality of criminal activity.
+
+Only gradually will it be possible to evaluate all the data collected during the COVID-19 pandemic. Similar to crime statistics, decision-makers from politics and society will be able to observe developments and thereby anticipate future needs and risks. Ideally, data analysis can help prevent and combat crime even better.
+
+
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+# For the interested reader (methodology)
+
+In order to to create figures, maps, and tables that are showing developments in crime events in Berlin, several data sources are required: Most importantly, we need a dataset that captures the absolute and frequency numbers of the different crime types, furthermore allowing to differentiate regarding time (calendar years) and location (LOR-Locations and city districts). This data can be downloaded from [Kriminalitätsatlas Berlin](https://www.kriminalitaetsatlas.berlin.de/K-Atlas/bezirke/atlasbez.html), where the data is published on a yearly basis. The Kriminalitätsatlas provides crime figures for each LOR-Raum in Berlin, which are local subcategories within the broader city districts. Thus, the data structure allows displaying both broader as well as more narrow local developments. In order to retrieve the numbers for every city district, all values of LOR-Location that belong to the same city district were simply added. This task was facilitated by the numeric LOR-keys, which start with the same two digits for each respective city district. Besides displaying the absolute values of crimes, the "Häufigkeitszahlen" are plotted, which take the population density of city districts into account, as well as the rate of change over time. These measures are calculated as follows:
+
+- Häufigkeitszahl (frequency quotient): Displays the frequency of the respective crime type for every 100,000 inhabitants (already available in the original data)
+- Rate of change: Displays the percentage change of crime frequency from 2019 to 2020
+
+Using the Kriminalitätsatlas data, meaningful tables can be created that store information on the frequency of crime in Berlin in 2019 and 2020. 
+For the presentation of the data, it was decided to discard some of the crime categories provided by the original data set. More specifically, some sub-categories that are also available in broader categories (such as bag-snatching, which is part of theft in general) were omitted. In the case of numerous subcategories (as theft from vehicles, car theft, and bicycle theft), only these were kept for making potential differences comparable. "Kieztaten" are not considered since they contain numerous sub-categories which are not comparable. 
+
+For a more intuitive and visually appealing representation, however, another dataset was integrated that contains information on the local boundaries of Berlin's city districts and LOR-locations. This required information is commonly stored in so-called **shapefiles**. Shapefiles are stored in a specific format, the **geospatial vector data format**. Broadly speaking, a shapefile contains spatial information (vectors) which can be used to visually represent points, lines, polygons, and further geometrical shapes. For instance, there are numerous location vectors for each city district which precisely describe their borders. In order to be able to plot the crime numbers on a Berlin map, the shapefile information therefore needed to be added to the original crime data. Luckily, shapefiles are widely available for most cities. For this article, two different shapefiles were used, one for the broader city district borders and one for the more narrow LOR-location, both available [here](https://daten.odis-berlin.de/).
+
+Ultimately, all required crime figures for both the city districts and the LOR-locations were calculated and the `tmap`-package in R was used for creating the final maps. Earlier, the shapefile was imported using the `sf`-package. For visually indicating the absolute number, the LOR-locations were colored, ranging from a very light red for low figures to a dark red for higher figures. In order to achieve the most descriptive scaling possible, a continuous scale is used in this figure. Regarding the percentage change from 2019 to 2020, a color palette ranging from dark blue to dark red is applied. Accordingly, dark blue areas on the map indicate districts in which the respective crime type decreased strongly (-20 percent or more), while dark red areas indicate great increases (+20 percent or more). Doing so, differences regarding both city districts as well as between crime types become easily visible.
+
+
+</div>
+
+***
+References:
+
+Boman, J. H., & Gallupe, O. (2020). Has COVID-19 changed crime? Crime rates in the United States during the pandemic. American journal of criminal justice, 45(4), 537-545. 
+
+Bullinger, L. R., Carr, J. B., & Packham, A. (2021). COVID-19 and crime: Effects of stay-at-home orders on domestic violence. American Journal of Health Economics, 7(3), 249-280. 
+
+Kashif, M., Javed, M. K., & Pandey, D. (2020). A surge in cyber-crime during COVID-19. Indonesian Journal of Social and Environmental Issues (IJSEI), 1(2), 48-52. 
+
+Stickle, B., & Felson, M. (2020). Crime rates in a pandemic: The largest criminological experiment in history. American Journal of Criminal Justice, 45(4), 525-536.
